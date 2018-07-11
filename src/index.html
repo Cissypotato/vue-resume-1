@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1.0,maxmum-scale=1.0,minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>your resume</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+        <div class="btns">
+            <button>登录</button>
+            <button>分享</button>
+            <button>打印</button>
+            <button>换肤</button>
+            <button>登出</button>
+        </div>
+    <div class="page" id="app">
+        
+        <section class="about">
+            <h2 contenteditable="true" v-on:input='x'>{{resume.name}}</h2>
+            
+                {{ resume.name }}
+            
+            <p>出生年月|应聘职位|性别|邮箱|手机</p>
+        </section>
+
+        <section class="skills">
+            <h2>技能</h2>
+            <ul class="skillWrap">
+                <li>
+                    静态页面制作<br>
+                    完美设计稿
+                </li>
+                <li>
+                    静态页面制作<br>
+                    完美设计稿
+                </li>
+                <li>
+                    静态页面制作<br>
+                    完美设计稿
+                </li>
+                <li>
+                    静态页面制作<br>
+                    完美设计稿
+                </li>
+
+            </ul>
+        </section>
+
+
+        <section class="projiects">
+                <h2>项目</h2>
+            <ul class="projectWrap">
+                <li>
+                    <h3>项目名称</h3>
+                    <a href="#">项目链接</a>
+                    <p>关键字</p>
+                    <p>我是怎么做这个项目的（描述）>我是怎么做这个项目的（描述）>我是怎么做这个项目的（描述）>我是怎么做这个项目的（描述）</p>
+                </li>
+                <li>
+                    <h3>项目名称</h3>
+                    <a href="#">项目链接</a>
+                    <p>关键字</p>
+                    <p>我是怎么做这个项目的（描述）</p>
+                </li>
+                <li>
+                    <h3>项目名称</h3>
+                    <a href="#">项目链接</a>
+                    <p>关键字</p>
+                    <p>我是怎么做这个项目的（描述）</p>
+                </li>
+                <li>
+                    <h3>项目名称</h3>
+                    <a href="#">项目链接</a>
+                    <p>关键字</p>
+                    <p>我是怎么做这个项目的（描述）</p>
+                </li>
+            </ul>
+        </section>
+
+
+
+    </div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.7.3/dist/av-min.js"></script>
+    <script>
+    
+        var APP_ID = 'OpuoKPUx8KV0qUbKhty3OpN4-gzGzoHsz';
+        var APP_KEY = 'YzA3fLuKBsTkx3o94oFlv6TB';
+
+        AV.init({
+        appId: APP_ID,
+        appKey: APP_KEY
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script>
+    
+    var app = new Vue({
+        el: '#app',
+        data: {
+            resume:{
+                name:"姓名"
+            },
+            message: 'Hello World!'
+        },
+        methods:{
+            x(e){
+                this.resume.name=e.currentTarget.innerText
+            }
+        }
+    })
+    </script>
+    
+</body>
+</html>
