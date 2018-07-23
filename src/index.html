@@ -18,11 +18,19 @@
     <div class="page" id="app">
         
         <section class="about">
-            <h2 contenteditable="true" v-on:input='x'>{{resume.name}}</h2>
+            <h1>
+                <editable-span v-bind:value="resume.name" v-on:edit="y('name',$event)"></editable-span>
+            </h1>
+            <p>
+                <editable-span v-bind:value="resume.jobIntention" v-on:edit="y('jobIntention',$event)"></editable-span>
+            </p>
             
-                {{ resume.name }}
-            
-            <p>出生年月|应聘职位|性别|邮箱|手机</p>
+            <p>
+                <editable-span v-bind:value="resume.gender" v-on:edit="y('gender',$event)"></editable-span>
+                |<editable-span v-bind:value="resume.birthday" v-on:edit="y('birthday',$event)"></editable-span>
+                |<editable-span v-bind:value="resume.email" v-on:edit="y('email',$event)"></editable-span>
+                |<editable-span v-bind:value="resume.phone" v-on:edit="y('phone',$event)"></editable-span>
+            </p>
         </section>
 
         <section class="skills">
@@ -97,22 +105,14 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-    <script>
+    <script src="js/editable-span.js"></script>
+    <script src="js/app.js"></script>
     
-    var app = new Vue({
-        el: '#app',
-        data: {
-            resume:{
-                name:"姓名"
-            },
-            message: 'Hello World!'
-        },
-        methods:{
-            x(e){
-                this.resume.name=e.currentTarget.innerText
-            }
-        }
-    })
+    <script>
+
+        
+    
+       
     </script>
     
 </body>
