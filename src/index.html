@@ -2,91 +2,128 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1.0,maxmum-scale=1.0,minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>your resume</title>
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/editable-span.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/register.css">
 </head>
 <body>
+        
+    <div class="page" id="app">
         <div class="btns">
-            <button>登录</button>
+            <button v-on:click="handleSave">保存</button>
             <button>分享</button>
             <button>打印</button>
             <button>换肤</button>
             <button>登出</button>
         </div>
-    <div class="page" id="app">
         
-        <section class="about">
-            <h1>
-                <editable-span v-bind:value="resume.name" v-on:edit="y('name',$event)"></editable-span>
-            </h1>
-            <p>
-                <editable-span v-bind:value="resume.jobIntention" v-on:edit="y('jobIntention',$event)"></editable-span>
-            </p>
-            
-            <p>
-                <editable-span v-bind:value="resume.gender" v-on:edit="y('gender',$event)"></editable-span>
-                |<editable-span v-bind:value="resume.birthday" v-on:edit="y('birthday',$event)"></editable-span>
-                |<editable-span v-bind:value="resume.email" v-on:edit="y('email',$event)"></editable-span>
-                |<editable-span v-bind:value="resume.phone" v-on:edit="y('phone',$event)"></editable-span>
-            </p>
-        </section>
-
-        <section class="skills">
-            <h2>技能</h2>
-            <ul class="skillWrap">
-                <li>
-                    静态页面制作<br>
-                    完美设计稿
-                </li>
-                <li>
-                    静态页面制作<br>
-                    完美设计稿
-                </li>
-                <li>
-                    静态页面制作<br>
-                    完美设计稿
-                </li>
-                <li>
-                    静态页面制作<br>
-                    完美设计稿
-                </li>
-
-            </ul>
-        </section>
-
-
-        <section class="projiects">
-                <h2>项目</h2>
-            <ul class="projectWrap">
-                <li>
-                    <h3>项目名称</h3>
-                    <a href="#">项目链接</a>
-                    <p>关键字</p>
-                    <p>我是怎么做这个项目的（描述）>我是怎么做这个项目的（描述）>我是怎么做这个项目的（描述）>我是怎么做这个项目的（描述）</p>
-                </li>
-                <li>
-                    <h3>项目名称</h3>
-                    <a href="#">项目链接</a>
-                    <p>关键字</p>
-                    <p>我是怎么做这个项目的（描述）</p>
-                </li>
-                <li>
-                    <h3>项目名称</h3>
-                    <a href="#">项目链接</a>
-                    <p>关键字</p>
-                    <p>我是怎么做这个项目的（描述）</p>
-                </li>
-                <li>
-                    <h3>项目名称</h3>
-                    <a href="#">项目链接</a>
-                    <p>关键字</p>
-                    <p>我是怎么做这个项目的（描述）</p>
-                </li>
-            </ul>
-        </section>
-
+        <div class="resume">
+            <section class="about">
+                <h1>
+                    <editable-span v-bind:value="resume.name" v-on:edit="y('name',$event)"></editable-span>
+                </h1>
+                <p>
+                    <editable-span v-bind:value="resume.jobIntention" v-on:edit="y('jobIntention',$event)"></editable-span>
+                </p>
+                
+                <p>
+                    <editable-span v-bind:value="resume.gender" v-on:edit="y('gender',$event)"></editable-span>
+                    |<editable-span v-bind:value="resume.birthday" v-on:edit="y('birthday',$event)"></editable-span>
+                    |<editable-span v-bind:value="resume.email" v-on:edit="y('email',$event)"></editable-span>
+                    |<editable-span v-bind:value="resume.phone" v-on:edit="y('phone',$event)"></editable-span>
+                </p>
+            </section>
+    
+            <section class="skills">
+                <h2>技能</h2>
+                <ul class="skillWrap">
+                    <li>
+                        静态页面制作<br>
+                        完美设计稿
+                    </li>
+                    <li>
+                        静态页面制作<br>
+                        完美设计稿
+                    </li>
+                    <li>
+                        静态页面制作<br>
+                        完美设计稿
+                    </li>
+                    <li>
+                        静态页面制作<br>
+                        完美设计稿
+                    </li>
+    
+                </ul>
+            </section>
+    
+    
+            <section class="projiects">
+                    <h2>项目</h2>
+                <ul class="projectWrap">
+                    <li>
+                        <h3>项目名称</h3>
+                        <a href="#">项目链接</a>
+                        <p>关键字</p>
+                        <p>我是怎么做这个项目的（描述）>我是怎么做这个项目的（描述）>我是怎么做这个项目的（描述）>我是怎么做这个项目的（描述）</p>
+                    </li>
+                    <li>
+                        <h3>项目名称</h3>
+                        <a href="#">项目链接</a>
+                        <p>关键字</p>
+                        <p>我是怎么做这个项目的（描述）</p>
+                    </li>
+                    <li>
+                        <h3>项目名称</h3>
+                        <a href="#">项目链接</a>
+                        <p>关键字</p>
+                        <p>我是怎么做这个项目的（描述）</p>
+                    </li>
+                    <li>
+                        <h3>项目名称</h3>
+                        <a href="#">项目链接</a>
+                        <p>关键字</p>
+                        <p>我是怎么做这个项目的（描述）</p>
+                    </li>
+                </ul>
+            </section>
+        </div>
+        <div class="login" v-show="loginVisible">
+            <form action="">
+                <button v-on:click="loginVisible=false">关闭</button>
+                <h2>登录</h2>
+                <div class="row">
+                    <label>邮箱</label>
+                    <input type="email" name="" id="">
+                </div>
+                <div class="row">
+                    <label>密码</label>
+                    <input type="email" name="" id="">
+                </div>
+                <button type="submit">提交</button>
+                <a href="#" v-on:click="loginVisible=false;registerVisible=true">注册</a>
+            </form>
+        </div>
+        <div class="register" v-show="registerVisible">
+            <form action="">
+                <button v-on:click="registerVisible=false">关闭</button>
+                <h2>注册</h2>
+                <div class="row">
+                    <label>邮箱</label>
+                    <input type="email" name="" id="">
+                </div>
+                <div class="row">
+                    <label>密码</label>
+                    <input type="email" name="" id="">
+                </div>
+                <button type="submit">提交</button>
+                <a href="#" v-on:click="registerVisible=false;loginVisible=true">登录</a href="#">
+            </form>
+        </div>
 
 
     </div>
