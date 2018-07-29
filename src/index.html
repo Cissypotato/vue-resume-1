@@ -92,33 +92,33 @@
                 </ul>
             </section>
         </div>
-        <div class="login" v-show="loginVisible">
+        <div class="login" v-show="loginVisible" v-on:submit.prevent="onLogin">
             <form action="">
                 <button v-on:click="loginVisible=false">关闭</button>
                 <h2>登录</h2>
                 <div class="row">
                     <label>邮箱</label>
-                    <input type="email" name="" id="">
+                    <input type="email" v-model="login.email">
                 </div>
                 <div class="row">
                     <label>密码</label>
-                    <input type="email" name="" id="">
+                    <input type="password" v-model="login.password">
                 </div>
                 <button type="submit">提交</button>
                 <a href="#" v-on:click="loginVisible=false;registerVisible=true">注册</a>
             </form>
         </div>
-        <div class="register" v-show="registerVisible">
+        <div class="register" v-show="registerVisible" v-on:submit.prevent="onRegister">
             <form action="">
                 <button v-on:click="registerVisible=false">关闭</button>
                 <h2>注册</h2>
                 <div class="row">
                     <label>邮箱</label>
-                    <input type="email" name="" id="">
+                    <input type="email" v-model="register.email">
                 </div>
                 <div class="row">
                     <label>密码</label>
-                    <input type="email" name="" id="">
+                    <input type="password" v-model="register.password">
                 </div>
                 <button type="submit">提交</button>
                 <a href="#" v-on:click="registerVisible=false;loginVisible=true">登录</a href="#">
