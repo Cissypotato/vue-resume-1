@@ -69,6 +69,12 @@ var app = new Vue({
             // 保存到云端
             user.save();
         },
+        logout(){
+            AV.User.logOut();
+            // 现在的 currentUser 是 null 了
+            var currentUser = AV.User.current();
+            alert("退出成功")
+        }
 
     },
    
