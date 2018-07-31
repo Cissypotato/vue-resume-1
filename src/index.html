@@ -18,11 +18,12 @@
             <button>分享</button>
             <button>打印</button>
             <button>换肤</button>
-            <button v-on:click="logout">登出</button>
+            <button v-on:click="logout" v-show="!!currentUser.objectId">登出</button>
         </div>
         
         <div class="resume">
             <section class="about">
+                {{currentUser}}
                 <h1>
                     <editable-span v-bind:value="resume.name" v-on:edit="y('name',$event)"></editable-span>
                 </h1>
