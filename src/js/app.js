@@ -26,10 +26,16 @@ var app = new Vue({
         y(key,value){
             this.resume[key]=value
         },
+        hasLogin(){
+            return !!this.currentUser.objectId
+            
+        },
         onLogin(e){
             AV.User.logIn(this.login.email, this.login.password).then( (user)=> {
-                this.currentUser.objectId=user.Id
-                this.currentUser.email=user.attributes.email
+                user=user.toJSON()
+                console.log(user)
+                this.currentUser.objectId=user.objectId
+                this.currentUser.email=user.email
                 this.loginVisible=false
               }, function (error) {
                   if(error.code===211){
@@ -47,9 +53,16 @@ var app = new Vue({
             user.setPassword(this.register.password);
             // 设置邮箱
             user.setEmail(this.register.email);
-            user.signUp().then(function (loggedInUser) {
+            user.signUp().then( (loggedInUser)=> {
+                user=user.toJSON()
+                console.log(user)
+                this.currentUser.objectId=user.objectId
+                this.currentUser.email=user.email
+
+                this.registerVisible=false
+                alert('注册成功，并且已登录')
             }, function (error) {
-                console.log(error)
+                alert(error.rawMessage)
             })
         },
         handleSave(){
@@ -65,18 +78,33 @@ var app = new Vue({
         },
         saveResume(){
            
-            let {objectId}=AV.User.current().Id;
+            let objectId=AV.User.current().toJSON().objectId;
             var user = AV.Object.createWithoutData('User', objectId);
             // 修改属性
             user.set('resume', this.resume);
             // 保存到云端
-            user.save();
+            user.save().then(()=>{
+                alert('保存成功')
+            },(error)=>{
+                consol.log(error)
+                alert('保存失败')
+            });
+        },
+        getResume(){
+            var query = new AV.Query('User');
+            query.get(this.currentUser.objectId).then( (user)=> {
+                user=user.toJSON() 
+                this.resume=user.resume
+            }, function (error) {
+                // 异常处理
+            });
+
         },
         logout(){
             AV.User.logOut();
             // 现在的 currentUser 是 null 了
             var currentUser = AV.User.current();
-            console.log(currentUser)
+            this.currentUser={email:undefined,objectId:undefined}
             alert("退出成功")
         }
 
@@ -88,4 +116,6 @@ let currentUser=AV.User.current()
 
 if (currentUser){
     app.currentUser=currentUser.toJSON()
+    app.getResume()
+    console.log(app.currentUser)
 }

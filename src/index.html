@@ -18,7 +18,7 @@
             <button>分享</button>
             <button>打印</button>
             <button>换肤</button>
-            <button v-on:click="logout" v-show="!!currentUser.objectId">登出</button>
+            <button v-on:click="logout" v-show="hasLogin()">登出</button>
         </div>
         
         <div class="resume">
