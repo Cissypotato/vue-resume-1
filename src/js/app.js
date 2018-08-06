@@ -11,7 +11,17 @@ var app = new Vue({
             birthday:"1995",
             gender:"性别",
             email:"邮箱",
-            phone:"手机"
+            phone:"手机",
+            skills:[
+                {name:"1",description:"11"},
+                {name:"2",description:"22"},
+                {name:"3",description:"33"},
+                {name:"4",description:"44"},
+            ],
+            projects:[
+                {name:"项目名称",keywords:"关键字",link:"项目链接",description:"项目描述"},
+                {name:"项目名称",keywords:"关键字",link:"项目链接",description:"项目描述"},
+            ]
         },
         login:{
             email:'',
@@ -23,8 +33,14 @@ var app = new Vue({
         }
     },
     methods:{
-        y(key,value){
+        edit(key,value){
             this.resume[key]=value
+        },
+        editSkill(index,key,value){
+            this.resume.skills[index][key]=value
+        },
+        editProject(index,key,value){
+            this.resume.projects[index][key]=value
         },
         hasLogin(){
             return !!this.currentUser.objectId
@@ -58,7 +74,6 @@ var app = new Vue({
                 console.log(user)
                 this.currentUser.objectId=user.objectId
                 this.currentUser.email=user.email
-
                 this.registerVisible=false
                 alert('注册成功，并且已登录')
             }, function (error) {
@@ -94,7 +109,10 @@ var app = new Vue({
             var query = new AV.Query('User');
             query.get(this.currentUser.objectId).then( (user)=> {
                 user=user.toJSON() 
-                this.resume=user.resume
+                console.log(user.resume)
+                
+                Object.assign(this.resume,user.resume)
+                console.log(this.resume)
             }, function (error) {
                 // 异常处理
             });
@@ -106,6 +124,18 @@ var app = new Vue({
             var currentUser = AV.User.current();
             this.currentUser={email:undefined,objectId:undefined}
             alert("退出成功")
+        },
+        addSkill(){
+            this.resume.skills.push({name:"技能名称",description:"技能描述"})
+        },
+        deleteSkill(index){
+            this.resume.skills.splice(index,1)
+        },
+        addProject(){
+            this.resume.projects.push( {name:"项目名称",keywords:"关键字",link:"项目链接",description:"项目描述"})
+        },
+        deleteProject(index){
+            this.resume.projects.splice(index,1)
         }
 
     },

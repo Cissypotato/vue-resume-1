@@ -14,6 +14,7 @@
         
     <div class="page" id="app">
         <div class="btns">
+            <button v-on:click="onLogin">登录</button>
             <button v-on:click="handleSave">保存</button>
             <button>分享</button>
             <button>打印</button>
@@ -25,70 +26,53 @@
             <section class="about">
                 {{currentUser}}
                 <h1>
-                    <editable-span v-bind:value="resume.name" v-on:edit="y('name',$event)"></editable-span>
+                    <editable-span v-bind:value="resume.name" v-on:edit="edit('name',$event)"></editable-span>
                 </h1>
                 <p>
-                    <editable-span v-bind:value="resume.jobIntention" v-on:edit="y('jobIntention',$event)"></editable-span>
+                    <editable-span v-bind:value="resume.jobIntention" v-on:edit="edit('jobIntention',$event)"></editable-span>
                 </p>
                 
                 <p>
-                    <editable-span v-bind:value="resume.gender" v-on:edit="y('gender',$event)"></editable-span>
-                    |<editable-span v-bind:value="resume.birthday" v-on:edit="y('birthday',$event)"></editable-span>
-                    |<editable-span v-bind:value="resume.email" v-on:edit="y('email',$event)"></editable-span>
-                    |<editable-span v-bind:value="resume.phone" v-on:edit="y('phone',$event)"></editable-span>
+                    <editable-span v-bind:value="resume.gender" v-on:edit="edit('gender',$event)"></editable-span>
+                    |<editable-span v-bind:value="resume.birthday" v-on:edit="edit('birthday',$event)"></editable-span>
+                    |<editable-span v-bind:value="resume.email" v-on:edit="edit('email',$event)"></editable-span>
+                    |<editable-span v-bind:value="resume.phone" v-on:edit="edit('phone',$event)"></editable-span>
                 </p>
             </section>
     
             <section class="skills">
                 <h2>技能</h2>
                 <ul class="skillWrap">
-                    <li>
-                        静态页面制作<br>
-                        完美设计稿
+                    <li v-for="(skill,index) in resume.skills">
+                       <div>
+                           <editable-span v-bind:value="skill.name" v-on:edit="editSkill(index,'name',$event)" ></editable-span>
+                           
+                        </div>
+                       <div>
+                            <editable-span v-bind:value="skill.description" v-on:edit="editSkill(index,'description',$event)"></editable-span>
+                        </div> 
+                       
+                        <span  v-show="index>=4" v-on:click="deleteSkill(index)">x</span>
                     </li>
                     <li>
-                        静态页面制作<br>
-                        完美设计稿
+                        <span v-on:click="addSkill">添加</span>
                     </li>
-                    <li>
-                        静态页面制作<br>
-                        完美设计稿
-                    </li>
-                    <li>
-                        静态页面制作<br>
-                        完美设计稿
-                    </li>
-    
                 </ul>
             </section>
     
     
             <section class="projiects">
                     <h2>项目</h2>
-                <ul class="projectWrap">
-                    <li>
-                        <h3>项目名称</h3>
-                        <a href="#">项目链接</a>
-                        <p>关键字</p>
-                        <p>我是怎么做这个项目的（描述）>我是怎么做这个项目的（描述）>我是怎么做这个项目的（描述）>我是怎么做这个项目的（描述）</p>
+                <ul class="projectWrap" >
+                    <li v-for="(project,index) in resume.projects">
+                        <h3><editable-span v-bind:value="project.name" v-on:edit="editProject(index,'name',$event)"></editable-span></h3>
+                        <a href="#"><editable-span v-bind:value="project.keywords" v-on:edit="editProject(index,'keywords',$event)"></editable-span></a>
+                        <p><editable-span v-bind:value="project.link" v-on:edit="editProject(index,'link',$event)"></editable-span></p>
+                        <p><editable-span v-bind:value="project.description" v-on:edit="editProject(index,'description',$event)"></editable-span></p>
+                        <span  v-show="index>=2" v-on:click="deleteProject(index)">x</span>
                     </li>
                     <li>
-                        <h3>项目名称</h3>
-                        <a href="#">项目链接</a>
-                        <p>关键字</p>
-                        <p>我是怎么做这个项目的（描述）</p>
-                    </li>
-                    <li>
-                        <h3>项目名称</h3>
-                        <a href="#">项目链接</a>
-                        <p>关键字</p>
-                        <p>我是怎么做这个项目的（描述）</p>
-                    </li>
-                    <li>
-                        <h3>项目名称</h3>
-                        <a href="#">项目链接</a>
-                        <p>关键字</p>
-                        <p>我是怎么做这个项目的（描述）</p>
+                        <span v-on:click="addProject">添加</span>
                     </li>
                 </ul>
             </section>
