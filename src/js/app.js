@@ -4,11 +4,14 @@ var app = new Vue({
         editingName:false,
         loginVisible:false,
         registerVisible:false,
+        shareVisible:false,
+        shareLink:"unknown",
         currentUser:{email:undefined,objectId:undefined},
+        previewUser:{previewUserId:undefined},
         resume:{
             name:"姓名",
             jobIntention:"求职意向",
-            birthday:"1995",
+            birthday:"年龄",
             gender:"性别",
             email:"邮箱",
             phone:"手机",
@@ -30,6 +33,13 @@ var app = new Vue({
         register:{
             email:'',
             password:''
+        }
+    },
+    watch:{
+        'currentUser.objectId':function(newValue,oldValue){
+            if(newValue){
+                this.getResume(this.currentUser)
+            }
         }
     },
     methods:{
@@ -105,13 +115,11 @@ var app = new Vue({
                 alert('保存失败')
             });
         },
-        getResume(){
+        getResume(user){
             var query = new AV.Query('User');
-            query.get(this.currentUser.objectId).then( (user)=> {
-                user=user.toJSON() 
-                console.log(user.resume)
-                
-                Object.assign(this.resume,user.resume)
+            query.get(user.objectId).then( (logined)=> {
+                logined=logined.toJSON() 
+                Object.assign(this.resume,logined.resume)
                 console.log(this.resume)
             }, function (error) {
                 // 异常处理
@@ -143,9 +151,18 @@ var app = new Vue({
 })
 
 let currentUser=AV.User.current()
+let search=location.search
+let pattern=/user_id=([^&]+)/
+let id=search.match(pattern)
+if(id){
+    console.log('预览模式')
+}else{
+    console.log('登录模式')
+}
 
 if (currentUser){
-    app.currentUser=currentUser.toJSON()
-    app.getResume()
+    app.currentUser=currentUser.toJSON() 
+    app.shareLink=location.origin+location.pathname+'?user_id='+app.currentUser.objectId
+    app.getResume(app.currentUser)
     console.log(app.currentUser)
 }

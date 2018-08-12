@@ -9,16 +9,20 @@
     <link rel="stylesheet" href="css/editable-span.css">
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="css/share.css">
+    
 </head>
 <body>
         
     <div class="page" id="app">
         <div class="btns">
-            <button v-on:click="onLogin">登录</button>
+            <button v-on:click="showLogin">登录</button>
             <button v-on:click="handleSave">保存</button>
-            <button>分享</button>
+            <button v-on:click="shareVisible = true">分享</button>
             <button>打印</button>
             <button>换肤</button>
+            <button>预览</button>
+            <button>退出预览</button>
             <button v-on:click="logout" v-show="hasLogin()">登出</button>
         </div>
         
@@ -109,7 +113,11 @@
                 <a href="#" v-on:click="registerVisible=false;loginVisible=true">登录</a href="#">
             </form>
         </div>
-
+        <div class="share" v-show="shareVisible">
+            <h2>复制以下链接分享</h2>
+            <textarea readonly>{{shareLink}}</textarea>
+            <span v-on:click="shareVisible=false">X</span>
+        </div>
 
     </div>
 
