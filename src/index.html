@@ -15,14 +15,14 @@
 <body>
         
     <div class="page" id="app">
-        <div class="btns">
+        <div class="btns" v-if=" mode==='edit'">
             <button v-on:click="showLogin">登录</button>
             <button v-on:click="handleSave">保存</button>
             <button v-on:click="shareVisible = true">分享</button>
             <button>打印</button>
             <button>换肤</button>
-            <button>预览</button>
-            <button>退出预览</button>
+            <button v-on:click="mode='preview'">预览</button>
+            
             <button v-on:click="logout" v-show="hasLogin()">登出</button>
         </div>
         
@@ -30,35 +30,35 @@
             <section class="about">
                 {{currentUser}}
                 <h1>
-                    <editable-span v-bind:value="resume.name" v-on:edit="edit('name',$event)"></editable-span>
+                    <editable-span :disabled="mode==='preview'" v-bind:value="displayResume.name" v-on:edit="edit('name',$event)"></editable-span>
                 </h1>
                 <p>
-                    <editable-span v-bind:value="resume.jobIntention" v-on:edit="edit('jobIntention',$event)"></editable-span>
+                    <editable-span :disabled="mode==='preview'" v-bind:value="displayResume.jobIntention" v-on:edit="edit('jobIntention',$event)"></editable-span>
                 </p>
                 
                 <p>
-                    <editable-span v-bind:value="resume.gender" v-on:edit="edit('gender',$event)"></editable-span>
-                    |<editable-span v-bind:value="resume.birthday" v-on:edit="edit('birthday',$event)"></editable-span>
-                    |<editable-span v-bind:value="resume.email" v-on:edit="edit('email',$event)"></editable-span>
-                    |<editable-span v-bind:value="resume.phone" v-on:edit="edit('phone',$event)"></editable-span>
+                    <editable-span :disabled="mode==='preview'" v-bind:value="displayResume.gender" v-on:edit="edit('gender',$event)"></editable-span>
+                    |<editable-span :disabled="mode==='preview'" v-bind:value="displayResume.birthday" v-on:edit="edit('birthday',$event)"></editable-span>
+                    |<editable-span :disabled="mode==='preview'" v-bind:value="displayResume.email" v-on:edit="edit('email',$event)"></editable-span>
+                    |<editable-span :disabled="mode==='preview'" v-bind:value="displayResume.phone" v-on:edit="edit('phone',$event)"></editable-span>
                 </p>
             </section>
     
             <section class="skills">
                 <h2>技能</h2>
                 <ul class="skillWrap">
-                    <li v-for="(skill,index) in resume.skills">
+                    <li v-for="(skill,index) in displayResume.skills">
                        <div>
-                           <editable-span v-bind:value="skill.name" v-on:edit="editSkill(index,'name',$event)" ></editable-span>
+                           <editable-span :disabled="mode==='preview'" v-bind:value="skill.name" v-on:edit="editSkill(index,'name',$event)" ></editable-span>
                            
                         </div>
                        <div>
-                            <editable-span v-bind:value="skill.description" v-on:edit="editSkill(index,'description',$event)"></editable-span>
+                            <editable-span  :disabled="mode==='preview'" v-bind:value="skill.description" v-on:edit="editSkill(index,'description',$event)"></editable-span>
                         </div> 
                        
-                        <span  v-show="index>=4" v-on:click="deleteSkill(index)">x</span>
+                        <span  v-show="index>=4" v-on:click="deleteSkill(index)" v-show="mode='eidt'">x</span>
                     </li>
-                    <li>
+                    <li v-if=" mode==='edit'">
                         <span v-on:click="addSkill">添加</span>
                     </li>
                 </ul>
@@ -68,14 +68,14 @@
             <section class="projiects">
                     <h2>项目</h2>
                 <ul class="projectWrap" >
-                    <li v-for="(project,index) in resume.projects">
-                        <h3><editable-span v-bind:value="project.name" v-on:edit="editProject(index,'name',$event)"></editable-span></h3>
-                        <a href="#"><editable-span v-bind:value="project.keywords" v-on:edit="editProject(index,'keywords',$event)"></editable-span></a>
-                        <p><editable-span v-bind:value="project.link" v-on:edit="editProject(index,'link',$event)"></editable-span></p>
-                        <p><editable-span v-bind:value="project.description" v-on:edit="editProject(index,'description',$event)"></editable-span></p>
-                        <span  v-show="index>=2" v-on:click="deleteProject(index)">x</span>
+                    <li v-for="(project,index) in displayResume.projects">
+                        <h3><editable-span :disabled="mode==='preview'" v-bind:value="project.name" v-on:edit="editProject(index,'name',$event)"></editable-span></h3>
+                        <a href="#"><editable-span :disabled="mode==='preview'" v-bind:value="project.keywords" v-on:edit="editProject(index,'keywords',$event)"></editable-span></a>
+                        <p><editable-span :disabled="mode==='preview'" v-bind:value="project.link" v-on:edit="editProject(index,'link',$event)"></editable-span></p>
+                        <p><editable-span :disabled="mode==='preview'" v-bind:value="project.description" v-on:edit="editProject(index,'description',$event)"></editable-span></p>
+                        <span  v-show="index>=2" v-on:click="deleteProject(index)" v-show="mode='eidt'">x</span>
                     </li>
-                    <li>
+                    <li v-if=" mode==='edit'">
                         <span v-on:click="addProject">添加</span>
                     </li>
                 </ul>
@@ -118,6 +118,10 @@
             <textarea readonly>{{shareLink}}</textarea>
             <span v-on:click="shareVisible=false">X</span>
         </div>
+        <div class="quitPreview" v-if="mode==='preview'">
+            <button v-on:click="mode='edit'">退出预览</button>
+        </div>
+        
 
     </div>
 
