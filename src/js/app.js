@@ -5,8 +5,9 @@ var app = new Vue({
         loginVisible:false,
         registerVisible:false,
         shareVisible:false,
+        skinVisible:false,
         shareLink:"unknown",
-        mode:'eidt',//'preview',
+        mode:'edit',//'preview',
         currentUser:{email:undefined,objectId:undefined},
         previewUser:{previewUserId:undefined},
         resume:{
@@ -64,11 +65,31 @@ var app = new Vue({
     watch:{
         'currentUser.objectId':function(newValue,oldValue){
             if(newValue){
-                this.getResume(this.currentUser)
+                this.getResume(this.currentUser).then((resume)=>{
+                    this.resume=resume
+                })
             }
         }
     },
     methods:{
+        onlogin(user){
+            this.currentUser.objectId=user.objectId
+            this.currentUser.email=user.email
+            this.loginVisible=false
+        },
+        onRegister(user){
+            this.currentUser.objectId=user.objectId
+            this.currentUser.email=user.email
+            this.registerVisible=false
+        },
+        hasShare(){
+            if(this.hasLogin()){
+                shareVisible=true
+            }else{
+                alert('请先登录哦')
+                this.loginVisible=true
+            }
+        },
         edit(key,value){
             this.resume[key]=value
         },
@@ -82,40 +103,8 @@ var app = new Vue({
             return !!this.currentUser.objectId
             
         },
-        onLogin(e){
-            AV.User.logIn(this.login.email, this.login.password).then( (user)=> {
-                user=user.toJSON()
-                console.log(user)
-                this.currentUser.objectId=user.objectId
-                this.currentUser.email=user.email
-                this.loginVisible=false
-              }, function (error) {
-                  if(error.code===211){
-                      alert("该邮箱没有被注册")
-                  }else if (error.code===210){
-                      alert('密码与邮箱不匹配')
-                  }
-              })
-        },
-        onRegister(e){
-            var user = new AV.User();
-            // 设置用户名
-            user.setUsername(this.register.email);
-            // 设置密码
-            user.setPassword(this.register.password);
-            // 设置邮箱
-            user.setEmail(this.register.email);
-            user.signUp().then( (loggedInUser)=> {
-                user=user.toJSON()
-                console.log(user)
-                this.currentUser.objectId=user.objectId
-                this.currentUser.email=user.email
-                this.registerVisible=false
-                alert('注册成功，并且已登录')
-            }, function (error) {
-                alert(error.rawMessage)
-            })
-        },
+        
+        
         handleSave(){
             var currentUser = AV.User.current();
             if (currentUser) {
@@ -172,7 +161,11 @@ var app = new Vue({
         },
         deleteProject(index){
             this.resume.projects.splice(index,1)
-        }
+        },
+        print(){
+            window.print()
+        },
+        
 
     },
    
